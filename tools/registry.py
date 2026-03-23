@@ -17,6 +17,7 @@ import json
 
 from tools.list_files import list_files
 from tools.get_file_contents import get_file_contents
+from tools.search_functions import search_functions
 
 # This gets set by main.py to the directory being analyzed.
 # Tools use it as the security boundary for path validation.
@@ -95,6 +96,42 @@ TOOLS = {
                         },
                     },
                     "required": ["file_path"],
+                },
+            },
+        },
+    },
+    },
+    "search_functions": {
+        "function": search_functions,
+        "schema": {
+            "type": "function",
+            "function": {
+                "name": "search_functions",
+                "description": (
+                    "Search for function and method definitions by name across "
+                    "the codebase. Returns matching file paths, line numbers, "
+                    "and signature lines. Use this to locate where a function "
+                    "is defined."
+                ),
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "query": {
+                            "type": "string",
+                            "description": (
+                                "Substring to match against function names. "
+                                "Case-insensitive."
+                            ),
+                        },
+                        "file_extension": {
+                            "type": "string",
+                            "description": (
+                                "Optional file extension filter, e.g. '.py' or '.js'. "
+                                "Omit to search all supported file types."
+                            ),
+                        },
+                    },
+                    "required": ["query"],
                 },
             },
         },
