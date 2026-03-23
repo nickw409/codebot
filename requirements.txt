@@ -1,0 +1,5 @@
+sentence-transformers
+openai>=1.0
+psycopg2-binary
+pgvector
+python-dotenv

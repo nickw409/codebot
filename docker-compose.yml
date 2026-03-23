@@ -1,0 +1,23 @@
+services:
+  db:
+    # pgvector/pgvector image bundles PostgreSQL with the vector extension pre-installed,
+    # so we don't need to manually compile or install pgvector.
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: codebot
+      POSTGRES_PASSWORD: codebot
+      POSTGRES_DB: codebot
+    ports:
+      - "5432:5432"
+    volumes:
+      # Any .sql files in this directory are executed on first container start.
+      # This is how we create our tables and enable the vector extension automatically.
+      - ./db:/docker-entrypoint-initdb.d
+      - pgvector_data:/var/lib/postgresql/data
+
+  # Ollama is expected to be running on the host machine (port 11434).
+  # If you don't have it installed: https://ollama.com/download
+  # Pull a model with: ollama pull llama3.1:8b
+
+volumes:
+  pgvector_data:
